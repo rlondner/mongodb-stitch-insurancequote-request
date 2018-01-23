@@ -1,10 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
-// import './index.css';
 // import App from './App';
 // import registerServiceWorker from './registerServiceWorker';
 import { withFormik, Form, Field } from 'formik';
 import Yup from 'yup';
+import logo from './lemonade-logo.svg';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 
 const App = ({
     values,
@@ -12,113 +15,157 @@ const App = ({
     touched,
     isSubmitting
 }) => (
-    <Form>
-        <div>
-            <label>
-                Select a policy type
-                <Field component="select" name="type">
-                    <option value="renters">Renters</option>
-                    <option value="condo">Condo</option>
-                    <option value="homeowners">Homeowners</option>
-                </Field>
-            </label>
-        </div>
-        <div>
-            <Field name="first_name" placeholder="First Name" />
-            <Field name="last_name" placeholder="Last Name" />
-        </div>
-        <div>
-            <label>
-                Date of Birth
-                <Field type="date" name="date_of_birth" placeholder="Date of Birth" />
-            </label>
-        </div>
-        <div>
-            { touched.email && errors.email && <p>{errors.email}</p> }
-            <Field type="email" name="email" placeholder="Email" />
-        </div>
-        <div>
-            <Field name="street_number" placeholder="Street Number" />
-            <Field name="street" placeholder="Street" />
-            <Field name="unit" placeholder="Unit/Apt #" />
-        </div>
-        <div>
-            <Field name="city" placeholder="City" />
-            <Field name="state" placeholder="State" />
-            <Field name="postal_code" placeholder="Zip" />
-        </div>
-        { values.type !== 'renters' &&
-            <div>
-                <Field type="number" name="square_ft" placeholder="Square Footage" />
-            </div>
-        }
-        { values.type === 'homeowners' &&
-            <div>
+    <div className="container">
+        <img src={logo} alt="logo" width="200" />
+        <h1 className="text-center">Request A Quote</h1>
+        <Form>
+            <div className="form-group">
                 <label>
-                    Is this a single family house?
-                    <Field component="select" name="single_family">
+                    Select a policy type
+                    <Field component="select" name="type" className="form-control">
+                        <option value="renters">Renters</option>
+                        <option value="condo">Condo</option>
+                        <option value="homeowners">Homeowners</option>
+                    </Field>
+                </label>
+            </div>
+            <div className="form-group">
+                <label>Name</label>
+                <div className="input-group">
+                    <Field name="first_name" placeholder="First" className="form-control" />
+                    <Field name="last_name" placeholder="Last" className="form-control" />
+                </div>
+            </div>
+            <div className="form-row">
+                <div className="form-group col-md-6">
+                    <label>
+                        Date of Birth
+                        <Field type="date" name="date_of_birth" placeholder="Date of Birth" className="form-control" />
+                    </label>
+                </div>
+                <div className="form-group col-md-6">
+                    <label>
+                        Email
+                        <Field type="email" name="email" placeholder="Email" className="form-control" />
+                    </label>
+                    { touched.email && errors.email && <p>{errors.email}</p> }
+                </div>
+            </div>
+            <div className="form-group">
+                <label>Address</label>
+                <div className="input-group">
+                    <Field name="street_number" placeholder="Street Number" className="form-control" />
+                    <Field name="street" placeholder="Street" className="form-control" />
+                    <Field name="unit" placeholder="Unit/Apt #" className="form-control" />
+                </div>
+            </div>
+            <div className="form-row">
+                <div className="form-group col-md-6">
+                    <label>
+                        City
+                        <Field name="city" placeholder="City" className="form-control" />
+                    </label>
+                </div>
+                <div className="form-group col-md-4">
+                    <label>
+                        State
+                        <Field name="state" placeholder="State" className="form-control" />
+                    </label>
+                </div>
+                <div className="form-group col-md-2">
+                    <label>
+                        Zip
+                        <Field name="postal_code" placeholder="Zip" className="form-control" />
+                    </label>
+                </div>
+            </div>
+            { values.type !== 'renters' &&
+                <div className="form-group row">
+                    <label className="col-sm-8 col-form-label">Square Footage</label>
+                    <div className="col-sm-4">
+                        <Field type="number" name="square_ft" placeholder="Square Footage" className="form-control" />
+                    </div>
+                </div>
+            }
+            { values.type === 'homeowners' &&
+                <div className="form-group row">
+                    <label className="col-sm-8 col-form-label">
+                        Is this a single family house?
+                    </label>
+                    <div className="col-sm-4">
+                        <Field component="select" name="single_family" className="form-control">
+                            <option value=""></option>
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </Field>
+                    </div>
+                </div>
+            }
+            { ['homeowners', 'condo'].includes(values.type) &&
+                <div className="form-group row">
+                    <label className="col-sm-8 col-form-label">
+                        Is this your primary residence?
+                    </label>
+                    <div className="col-sm-4">
+                        <Field component="select" name="primary_home" className="form-control" >
+                            <option value=""></option>
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </Field>
+                    </div>
+                </div>
+            }
+            <div className="form-group row">
+                <label className="col-sm-8 col-form-label">
+                    Does this property have a burglar alarm?
+                </label>
+                <div className="col-sm-4">
+                    <Field component="select" name="burglar_alarm" className="form-control">
                         <option value=""></option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
                     </Field>
-                </label>
+                </div>
             </div>
-        }
-        { ['homeowners', 'condo'].includes(values.type) &&
-            <div>
-                <label>
-                    Is this your primary residence?
-                    <Field component="select" name="primary_home" >
+            <div className="form-group row">
+                <label className="col-sm-8 col-form-label">
+                    Does this property have a fire alarm?
+                </label>
+                <div className="col-sm-4">
+                    <Field component="select" name="fire_alarm" className="form-control">
                         <option value=""></option>
                         <option value="false">No</option>
                         <option value="true">Yes</option>
                     </Field>
-                </label>
+                </div>
             </div>
-        }
-        <div>
-            <label>
-                Does this property have a burglar alarm?
-                <Field component="select" name="burglar_alarm">
-                    <option value=""></option>
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                </Field>
-            </label>
-        </div>
-        <div>
-            <label>
-                Does this property have a fire alarm?
-                <Field component="select" name="fire_alarm">
-                    <option value=""></option>
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                </Field>
-            </label>
-        </div>
-        <div>
-            <label>
-                Does this property have a mortgage?
-                <Field component="select" name="mortgage">
-                    <option value=""></option>
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                </Field>
-            </label>
-        </div>
-
-        <div>
-            <label>
-                Do you own a dog with a history of biting?
-                <Field component="select" name="dog_biting_history">
-                    <option value=""></option>
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                </Field>
-            </label>
-        </div>
-        <button disabled={isSubmitting}>Submit</button>
-    </Form>
+            <div className="form-group row">
+                <label className="col-sm-8 col-form-label">
+                    Does this property have a mortgage?
+                </label>
+                <div className="col-sm-4">
+                    <Field component="select" name="mortgage" className="form-control">
+                        <option value=""></option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </Field>
+                </div>
+            </div>
+            <div className="form-group row">
+                <label className="col-sm-8 col-form-label">
+                    Do you own a dog with a history of biting?
+                </label>
+                <div className="col-sm-4">
+                    <Field component="select" name="dog_biting_history" className="form-control">
+                        <option value=""></option>
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </Field>
+                </div>
+            </div>
+            <button disabled={isSubmitting} className="btn btn-dark pink">Submit</button>
+        </Form>
+    </div>
 )
 
 const FormikApp = withFormik({
