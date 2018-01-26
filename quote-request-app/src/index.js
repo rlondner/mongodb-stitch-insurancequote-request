@@ -2,12 +2,16 @@ import React from 'react';
 import { render } from 'react-dom';
 // import App from './App';
 // import registerServiceWorker from './registerServiceWorker';
+import { StitchClient } from 'mongodb-stitch';
 import { withFormik, Form, Field } from 'formik';
 import Yup from 'yup';
 import logo from './lemonade-logo.svg';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
+
+let appId = 'insurance_quote_requests-owijb';
+let stitchClient = new StitchClient(appId);
 
 const App = ({
     values,
@@ -246,10 +250,16 @@ const FormikApp = withFormik({
 
     }),
     handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
-        setTimeout(() => {
-            resetForm()
-            setSubmitting(false)
-        }, 2000)
+        stitchClient.login()
+            .then(() => {
+                console.log(`logged in as: ${stitchClient.authedId()}`)
+                stitchClient.executeFunction('Submit_Quote', values)
+                    .then(() => {
+                        resetForm()
+                        setSubmitting(false)
+                    })
+            })
+            .catch(e => console.log('error: ', e));
         console.log(values)
     }
 })(App)
