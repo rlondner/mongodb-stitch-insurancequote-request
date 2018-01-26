@@ -259,7 +259,10 @@ const FormikApp = withFormik({
                         setSubmitting(false)
                     })
             })
-            .catch(e => console.log('error: ', e));
+            .catch(e => {
+                console.log('error: ', e)
+                setSubmitting(false)
+            });
         console.log(values)
     }
 })(App)
