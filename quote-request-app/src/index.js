@@ -13,6 +13,8 @@ import './index.css';
 let appId = 'insurance_quote_requests-owijb';
 let stitchClient = new StitchClient(appId);
 
+const states = [ 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+
 const App = ({
     values,
     errors,
@@ -81,7 +83,10 @@ const App = ({
                 <div className="form-group col-md-4">
                     <label>
                         State
-                        <Field name="state" placeholder="State" className="form-control" />
+                        <Field component="select" name="state" placeholder="State" className="form-control">
+                            <option value=""></option>
+                            { states.map((state) => (<option value={state} key={state}>{state}</option>)) }
+                        </Field>
                     </label>
                     { touched.state && errors.state && <small className="form-text text-danger">{errors.state}</small> }
                 </div>
