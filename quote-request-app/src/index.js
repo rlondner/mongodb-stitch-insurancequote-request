@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 // import App from './App';
 // import registerServiceWorker from './registerServiceWorker';
-import { StitchClient } from 'mongodb-stitch';
+import { StitchClientFactory } from 'mongodb-stitch';
 import { withFormik, Form, Field } from 'formik';
 import Yup from 'yup';
 import logo from './lemonade-logo.svg';
@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 let appId = 'insurance_quote_requests-owijb';
-let stitchClient = new StitchClient(appId);
+const stitchClientPromise = StitchClientFactory.create(appId);
 
 const states = [ 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY' ];
 
@@ -255,9 +255,9 @@ const FormikApp = withFormik({
 
     }),
     handleSubmit(values, { resetForm, setErrors, setSubmitting }) {
-        stitchClient.login()
-            .then(() => {
-                console.log(`logged in as: ${stitchClient.authedId()}`)
+        stitchClientPromise.then(stitchClient => stitchClient.login()
+            .then(authedId => {
+                console.log(`logged in as: ${authedId}`)
                 stitchClient.executeFunction('Submit_Quote', values)
                     .then(() => {
                         resetForm()
@@ -267,7 +267,7 @@ const FormikApp = withFormik({
             .catch(e => {
                 console.log('error: ', e)
                 setSubmitting(false)
-            });
+            }));
         console.log(values)
     }
 })(App)
