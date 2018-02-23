@@ -259,9 +259,10 @@ const FormikApp = withFormik({
             .then(() => {
                 console.log(`logged in as: ${stitchClient.authedId()}`)
                 stitchClient.executeFunction('Submit_Quote', values)
-                    .then(() => {
+                    .then(docs => {
                         resetForm()
                         setSubmitting(false)
+                        console.log("Stitch Function result: " + JSON.stringify(docs));
                     })
             })
             .catch(e => {

@@ -57,3 +57,4 @@ typings/
 # dotenv environment variables file
 .env
 
+quote-request-app/src/test.json
