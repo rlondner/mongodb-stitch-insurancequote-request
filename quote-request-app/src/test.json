@@ -1,0 +1,43 @@
+{
+    "type": "renters",
+    "first_name": "Gavin",
+    "last_name": "Belson",
+    "date_of_birth": "1977-02-14",
+    "email": "gavin@hooli.com",
+    "street_number": "750",
+    "street": "Mission St.",
+    "unit": "",
+    "city": "San Francisco",
+    "state": "CA",
+    "postal_code": "94103",
+    "square_ft": "",
+    "single_family": "",
+    "primary_home": "",
+    "burglar_alarm": "",
+    "fire_alarm": "",
+    "mortgage": "",
+    "dog_biting_history": "false"
+}
+
+{
+    "type": "homeowners",
+    "first_name": "Raphael",
+    "last_name": "Londner",
+    "date_of_birth": "1977-02-07",
+    "email": "raphael.londner@gmail.com",
+    "street_number": "1524 ",
+    "street": "Huddersfield Ct",
+    "unit": "",
+    "city": "San Jose",
+    "state": "CA",
+    "postal_code": "95126",
+    "square_ft": {
+        "$numberInt": "1300"
+    },
+    "single_family": "true",
+    "primary_home": "true",
+    "burglar_alarm": "",
+    "fire_alarm": "",
+    "mortgage": "",
+    "dog_biting_history": "false"
+}
